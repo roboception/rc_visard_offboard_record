@@ -1,4 +1,4 @@
-rc\_visard Data Recording Scripts
+rc\_visard Offboard Data Recording Scripts
 =================================
 
 This repository provides Linux and Windows scripts for recording data with the rc\_visard.
