@@ -35,7 +35,7 @@ setlocal enableDelayedExpansion
 set "SCRIPT_PATH=%~dp0"
 
 :: commands
-set "GC_FOLDER=!SCRIPT_PATH!\rc_genicam_api-win32-vc14-v1.3.15\bin"
+set "GC_FOLDER=!SCRIPT_PATH!\rc_genicam_api-win32-vc14-v2.0.0\bin"
 set "DYN_FOLDER=!SCRIPT_PATH!\rc_dynamics_api-win32-vc14-v0.7.0\bin"
 set "GC_STREAM=!GC_FOLDER!\gc_stream"
 set "GC_INFO=!GC_FOLDER!\gc_info"
