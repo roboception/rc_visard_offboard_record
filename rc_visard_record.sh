@@ -372,7 +372,7 @@ else
 fi
 
 if $VERBOSE; then echo "$COLOR_CMD"; fi
-$COLOR_CMD 2> /dev/null
+$COLOR_CMD 2> /dev/null || true
 
 # build gc_stream command
 ENABLE_INTENSITY=0
