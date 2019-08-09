@@ -1,22 +1,22 @@
 :: Copyright (c) 2018 Roboception GmbH
 :: All rights reserved
-:: 
+::
 :: Author: Raphael Schaller
-:: 
+::
 :: Redistribution and use in source and binary forms, with or without
 :: modification, are permitted provided that the following conditions are met:
-:: 
+::
 :: 1. Redistributions of source code must retain the above copyright notice,
 :: this list of conditions and the following disclaimer.
-:: 
+::
 :: 2. Redistributions in binary form must reproduce the above copyright notice,
 :: this list of conditions and the following disclaimer in the documentation
 :: and/or other materials provided with the distribution.
-:: 
+::
 :: 3. Neither the name of the copyright holder nor the names of its contributors
 :: may be used to endorse or promote products derived from this software without
 :: specific prior written permission.
-:: 
+::
 :: THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 :: AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 :: IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -35,7 +35,7 @@ setlocal enableDelayedExpansion
 set "SCRIPT_PATH=%~dp0"
 
 :: commands
-set "GC_FOLDER=!SCRIPT_PATH!\rc_genicam_api-win32-vc14-v2.0.0\bin"
+set "GC_FOLDER=!SCRIPT_PATH!\rc_genicam_api-win32-vc15-v2.2.3\bin"
 set "DYN_FOLDER=!SCRIPT_PATH!\rc_dynamics_api-win32-vc14-v0.7.0\bin"
 set "GC_STREAM=!GC_FOLDER!\gc_stream"
 set "GC_INFO=!GC_FOLDER!\gc_info"
@@ -81,7 +81,7 @@ set "USAGE=Usage: !SCRIPT! [options] <rc_visard serial number>!\n! Options!\n!  
 if "%1"=="" (
   set NO_ARGS_PASSED=y
 )
-  
+
 :loop
 if not "%1"=="" (
   set ARG=%1
@@ -170,8 +170,8 @@ if defined NO_ARGS_PASSED (
   if "!SN!"=="" (
     :interactive_loop
     set /P "c=Enter the rc_visard's serial number or user defined name, 'L' to list available rc_visards, or 'h' to print the help text "
-    if "!c!"=="h" ( 
-      set PRINT_HELP=y 
+    if "!c!"=="h" (
+      set PRINT_HELP=y
     )
     if /I "!c!"=="l" (
       call "!GC_CONFIG!" -l
@@ -230,12 +230,12 @@ if not "!HAND_EYE_CALIB!"=="" ( set GET_IP=y )
 
 if defined GET_IP (
   for /F "tokens=*" %%g in ('call "!GC_CONFIG!" !SN! --iponly') do (set IP=%%g)
-  
+
   if "!IP!"=="" (
     echo Sensor not found
     goto :eof
   )
-  
+
   if "!VERBOSE!"=="true" ( echo Sensor IP is !IP! )
 )
 
@@ -259,7 +259,7 @@ if not "!HAND_EYE_CALIB!"=="" (
   call :conditionally_silence_cmd !CURL! -s -S -X PUT --header "Content-Type: application/json" --header "Accept: application/json" -d "{ }" "http://!IP!/api/v1/nodes/rc_hand_eye_calibration/services/get_calibration" -o !HAND_EYE_CALIB!
 )
 
-if "!MONO!"=="true" ( 
+if "!MONO!"=="true" (
   set "COLOR_CMD=^"!GC_CONFIG!^" !SN! ComponentSelector=Intensity PixelFormat=Mono8 ComponentSelector=IntensityCombined PixelFormat=Mono8"
 ) else (
   set "COLOR_CMD=^"!GC_CONFIG!^" !SN! ComponentSelector=Intensity PixelFormat=YCbCr411_8 ComponentSelector=IntensityCombined PixelFormat=YCbCr411_8"
@@ -275,16 +275,16 @@ set ENABLE_CONFIDENCE=0
 set ENABLE_ERROR=0
 
 if "!LEFT!"=="true" (
-  if "!RIGHT!"=="true" ( 
-    set ENABLE_COMBINED=1 
+  if "!RIGHT!"=="true" (
+    set ENABLE_COMBINED=1
 ))
 if "!LEFT!"=="false" (
-  if "!RIGHT!"=="true" ( 
-    set ENABLE_COMBINED=1 
+  if "!RIGHT!"=="true" (
+    set ENABLE_COMBINED=1
 ))
 if "!LEFT!"=="true" (
-  if "!RIGHT!"=="false" ( 
-    set ENABLE_INTENSITY=1 
+  if "!RIGHT!"=="false" (
+    set ENABLE_INTENSITY=1
 ))
 
 if "!DISPARITY!"=="true" ( set ENABLE_DISPARITY=1 )
@@ -303,7 +303,7 @@ echo Start streaming ...
 call !GC_COMMAND!
 
 if not "!SLAM!"=="" (
-  echo Writing trajectory to '!SLAM!' ... 
+  echo Writing trajectory to '!SLAM!' ...
   call :conditionally_silence_cmd !CURL! -s -S -X PUT --header "Content-Type: application/json" --header "Accept: application/json" -d "{ }" "http://%IP%/api/v1/nodes/rc_dynamics/services/stop"
   call :conditionally_silence_cmd !CURL! -s -S -X PUT --header "Content-Type: application/json" --header "Accept: application/json" -d "{ }" "http://%IP%/api/v1/nodes/rc_slam/services/get_trajectory" -o !SLAM!
 )
@@ -343,11 +343,11 @@ set QUERY=%~1
 set /P "c=!QUERY!"
 set YES=
 set NO=
-if "!c!"=="y" ( 
-  set YES=y 
+if "!c!"=="y" (
+  set YES=y
 )
-if "!c!"=="Y" ( 
-  set YES=y 
+if "!c!"=="Y" (
+  set YES=y
 )
 if not defined YES (
   set NO=y
