@@ -4,21 +4,21 @@
 # All rights reserved
 #
 # Author: Raphael Schaller
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # 1. Redistributions of source code must retain the above copyright notice,
 # this list of conditions and the following disclaimer.
-# 
+#
 # 2. Redistributions in binary form must reproduce the above copyright notice,
 # this list of conditions and the following disclaimer in the documentation
 # and/or other materials provided with the distribution.
-# 
+#
 # 3. Neither the name of the copyright holder nor the names of its contributors
 # may be used to endorse or promote products derived from this software without
 # specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -110,9 +110,9 @@ check_projector()
 check_is_number()
 {
   case "$1" in
-    ''|*[!0-9]*) 
+    ''|*[!0-9]*)
     echo Argument $2 is not a number
-    PARSE_ERROR=true 
+    PARSE_ERROR=true
     ;;
   esac
 }
@@ -224,7 +224,7 @@ if "$NO_ARGS_PASSED" && [ -z "$SN" ]; then
   while ! "$PRINT_HELP" && [ -z "$SN" ]; do
     echo "Enter the rc_visard's serial number or user defined name, 'L' to list available rc_visards, or 'h' to print the help text"
     read REPLY
-    if [ "$REPLY" = "h" ]; then PRINT_HELP=true; 
+    if [ "$REPLY" = "h" ]; then PRINT_HELP=true;
     elif [ "$REPLY" = "l" ] || [ "$REPLY" = "L" ]; then
       if [ -z "$(command -v $GC_CONFIG)" ]; then
         echo "$GC_CONFIG is not found"
@@ -317,21 +317,21 @@ fi
 if [ -n "$SLAM" ] || [ -n "$IMU" ] || [ -n "$HAND_EYE_CALIB" ]; then
   # get IP of sensor for Rest API calls
   IP=$(eval "\"$GC_CONFIG\" \"$SN\" --iponly")
-  
-  if [ -z "$IP" ]; then 
+
+  if [ -z "$IP" ]; then
     pause_if_interactive_and_exit 1
   fi
   if [ "$VERBOSE" = true ]; then echo "Sensor IP is $IP"; fi
 fi
 
 # forward stdout to /dev/null in case not in verbose mode
-conditional_silence_cmd() 
+conditional_silence_cmd()
 {
   if [ "$VERBOSE" = false ]; then
       "$@" > /dev/null
   else
       "$@"
-  fi 
+  fi
 }
 
 if [ -n "$SLAM" ]; then
@@ -349,7 +349,7 @@ get_trajectory()
 cleanup()
 {
   if [ -n "$SLAM" ]; then get_trajectory; fi
-  pause_if_interactive_and_exit 0 
+  pause_if_interactive_and_exit 0
 }
 trap 'cleanup' INT
 
@@ -384,8 +384,8 @@ ENABLE_DISPARITY=0
 ENABLE_CONFIDENCE=0
 ENABLE_ERROR=0
 
-if [ "$LEFT" = true ] && [ "$RIGHT" = true ]; then 
-  ENABLE_COMBINED=1 
+if [ "$LEFT" = true ] && [ "$RIGHT" = true ]; then
+  ENABLE_COMBINED=1
 elif [ "$LEFT" = true ]; then
   ENABLE_INTENSITY=1
 elif [ "$RIGHT" = true ]; then
@@ -397,12 +397,13 @@ if [ "$ERROR" = true ]; then ENABLE_ERROR=1; fi
 
 GC_COMMAND="\"$GC_STREAM\" \"$SN\" \"n=$NUMBER\"\
  \"AcquisitionFrameRate=$FRAME_RATE\"\
+ \"AcquisitionAlternateFilter=Off\"\
  ComponentSelector=Intensity \"ComponentEnable=$ENABLE_INTENSITY\"\
  ComponentSelector=IntensityCombined \"ComponentEnable=$ENABLE_COMBINED\"\
  ComponentSelector=Disparity \"ComponentEnable=$ENABLE_DISPARITY\"\
  ComponentSelector=Confidence \"ComponentEnable=$ENABLE_CONFIDENCE\"\
  ComponentSelector=Error \"ComponentEnable=$ENABLE_ERROR\""
- 
+
 if [ -n "$PROJECTOR" ]; then
   GC_COMMAND+=" LineSelector=Out1 \"LineSource=$PROJECTOR\""
 fi
@@ -412,6 +413,5 @@ if [ "$VERBOSE" = true ]; then echo "$GC_COMMAND"; fi
 
 eval "$GC_COMMAND"
 
-if [ -n "$SLAM" ]; then get_trajectory; 
+if [ -n "$SLAM" ]; then get_trajectory;
 else pause_if_interactive_and_exit 0; fi
-
