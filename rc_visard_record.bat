@@ -51,7 +51,7 @@ set "SN="
 
 :: default parameters
 set "LEFT=true"
-set "RIGHT=false"
+set "RIGHT=true"
 set "DISPARITY=true"
 set "CONFIDENCE=true"
 set "ERROR=true"

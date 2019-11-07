@@ -47,7 +47,7 @@ SN=
 
 # default parameters
 LEFT=true
-RIGHT=false
+RIGHT=true
 DISPARITY=true
 CONFIDENCE=true
 ERROR=true
