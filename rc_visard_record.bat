@@ -268,6 +268,10 @@ if "!MONO!"=="true" (
 if "!VERBOSE!"=="true" ( echo !COLOR_CMD! )
 call !COLOR_CMD! 2> nul
 
+set "ALTERNATE_FILTER_OFF_CMD=^"!GC_CONFIG!^" !SN! AcquisitionAlternateFilter=Off"
+if "!VERBOSE!"=="true" ( echo !ALTERNATE_FILTER_OFF_CMD! )
+call !ALTERNATE_FILTER_OFF_CMD! 2> nul
+
 set ENABLE_INTENSITY=0
 set ENABLE_COMBINED=0
 set ENABLE_DISPARITY=0

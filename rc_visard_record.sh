@@ -377,6 +377,11 @@ fi
 if "$VERBOSE"; then echo "$COLOR_CMD"; fi
 eval "$COLOR_CMD" 2> /dev/null || true
 
+ALTERNATE_FILTER_OFF_CMD="$GC_CONFIG $SN AcquisitionAlternateFilter=Off"
+if "$VERBOSE"; then echo "$ALTERNATE_FILTER_OFF_CMD"; fi
+# the command fails if there is no IOControl license
+eval "$ALTERNATE_FILTER_OFF_CMD" 2> /dev/null || true
+
 # build gc_stream command
 ENABLE_INTENSITY=0
 ENABLE_COMBINED=0
@@ -397,7 +402,6 @@ if [ "$ERROR" = true ]; then ENABLE_ERROR=1; fi
 
 GC_COMMAND="\"$GC_STREAM\" \"$SN\" \"n=$NUMBER\"\
  \"AcquisitionFrameRate=$FRAME_RATE\"\
- \"AcquisitionAlternateFilter=Off\"\
  ComponentSelector=Intensity \"ComponentEnable=$ENABLE_INTENSITY\"\
  ComponentSelector=IntensityCombined \"ComponentEnable=$ENABLE_COMBINED\"\
  ComponentSelector=Disparity \"ComponentEnable=$ENABLE_DISPARITY\"\
