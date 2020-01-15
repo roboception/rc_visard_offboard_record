@@ -295,7 +295,7 @@ if "!DISPARITY!"=="true" ( set ENABLE_DISPARITY=1 )
 if "!CONFIDENCE!"=="true" ( set ENABLE_CONFIDENCE=1 )
 if "!ERROR!"=="true" ( set ENABLE_ERROR=1 )
 
-set "GC_COMMAND=^"!GC_STREAM!^" !SN! n=!NUMBER! AcquisitionFrameRate=!FRAME_RATE! AcquisitionAlternateFilter=Off ComponentSelector=Intensity ComponentEnable=!ENABLE_INTENSITY! ComponentSelector=IntensityCombined ComponentEnable=!ENABLE_COMBINED! ComponentSelector=Disparity ComponentEnable=!ENABLE_DISPARITY! ComponentSelector=Confidence ComponentEnable=!ENABLE_CONFIDENCE! ComponentSelector=Error ComponentEnable=!ENABLE_ERROR!"
+set "GC_COMMAND=^"!GC_STREAM!^" !SN! n=!NUMBER! AcquisitionFrameRate=!FRAME_RATE! ComponentSelector=Intensity ComponentEnable=!ENABLE_INTENSITY! ComponentSelector=IntensityCombined ComponentEnable=!ENABLE_COMBINED! ComponentSelector=Disparity ComponentEnable=!ENABLE_DISPARITY! ComponentSelector=Confidence ComponentEnable=!ENABLE_CONFIDENCE! ComponentSelector=Error ComponentEnable=!ENABLE_ERROR!"
 
 if not "!PROJECTOR!"=="" (
   set "GC_COMMAND=!GC_COMMAND! LineSelector=Out1 LineSource=!PROJECTOR!"
